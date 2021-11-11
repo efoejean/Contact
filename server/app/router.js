@@ -15,7 +15,6 @@ const contacts = await client.db(config.db.name).collection(config.db.collection
 res.json(contacts);
 })
 
-
 // route to get email that has include hot. 
 /* router.get("/contact", async (req, res) =>{
 * const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex:"hot"}}).toArray();
@@ -30,9 +29,26 @@ res.json(contacts);
 
 
 // route to filter name by "pro" and $options : "i" make the search case nonsensitive 
-    router.get("/contact", async (req, res) =>{
-     const contacts = await client.db(config.db.name).collection(config.db.collection).find({ name:{$regex: "pro", $options:"i"}}).toArray();
+
+/* router.get("/contact", async (req, res) =>{
+* const contacts = await client.db(config.db.name).collection(config.db.collection).find({ name:{$regex: "pro", $options:"i"}}).toArray();
+* res.json(contacts);
+* }) */
+
+//  Route to query dynamic
+router.get("/contact", async (req, res) => {
+    const queries = Object.keys(req.query);
+    const values = Object.values(req.query);
+  
+    const contacts = await client
+      .db(config.db.name)
+      .collection(config.db.collection)
+      .find({ [queries[0]]: { $regex: values[0], $options: "i" } })
+      .toArray();
+  
     res.json(contacts);
-    }) 
+  });
+
+
 
 export default router;
