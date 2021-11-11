@@ -16,11 +16,17 @@ res.json(contacts);
 })
 
 
+// route to get email that has include hot. 
+/* router.get("/contact", async (req, res) =>{
+* const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex:"hot"}}).toArray();
+* res.json(contacts);
+* }) */
 
+// route to use  the request query
 router.get("/contact", async (req, res) =>{
-const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex:"hot"}}).toArray();
-res.json(contacts);
-})
+    const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex: req.query.email}}).toArray();
+    res.json(contacts);
+    }) 
 
 
 export default router;
