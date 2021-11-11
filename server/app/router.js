@@ -22,11 +22,17 @@ res.json(contacts);
 * res.json(contacts);
 * }) */
 
-// route to use  the request query
-router.get("/contact", async (req, res) =>{
-    const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex: req.query.email}}).toArray();
+// route to use  the request query to search email,
+/* router.get("/contact", async (req, res) =>{
+* const contacts = await client.db(config.db.name).collection(config.db.collection).find({ email:{$regex: req.query.email}}).toArray();
+* res.json(contacts);
+* }) */
+
+
+// route to filter name by "pro" and $option : "i" make the search case nonsensitive 
+    router.get("/contact", async (req, res) =>{
+     const contacts = await client.db(config.db.name).collection(config.db.collection).find({ name:{$regex: "pro", $options:"i"}}).toArray();
     res.json(contacts);
     }) 
-
 
 export default router;
