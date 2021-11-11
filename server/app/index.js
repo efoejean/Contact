@@ -13,6 +13,8 @@ app.get("/", (_, res) => {
 
 
 
+app.use("/api", router); // use the router
+
 // start the server
 app.listen(config.port, () => {
   console.info(`Server 🏃🏾‍♂️ at: http://localhost:${config.port}`);
